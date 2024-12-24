@@ -1,0 +1,114 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>
+      <h1 class="mat-headline-5">Lista de Clientes</h1>
+    </mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div class="cliente-list-container">
+      <form (ngSubmit)="applyFilters($event)" #filterForm="ngForm" class="filters-form">
+        <mat-form-field appearance="outline">
+          <mat-label>Nome</mat-label>
+          <input matInput [(ngModel)]="filters.name" name="name" placeholder="Buscar por nome"
+            aria-label="Nome do cliente">
+          <mat-icon matSuffix>person_search</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Inscrição</mat-label>
+          <input matInput [(ngModel)]="filters.inscricao" name="inscricao" placeholder="Número de inscrição"
+            aria-label="Número de inscrição">
+          <mat-icon matSuffix>numbers</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Status</mat-label>
+          <mat-select [(ngModel)]="filters.status" name="status" aria-label="Selecionar status">
+            <mat-option [value]="">Todos</mat-option>
+            <mat-option *ngFor="let status of statusOptions" [value]="status">
+              {{ status }}
+            </mat-option>
+          </mat-select>
+          <mat-icon matSuffix>filter_list</mat-icon>
+        </mat-form-field>
+
+        <div class="button-container">
+          <button mat-raised-button color="primary" type="submit" [disabled]="filterForm.pristine">
+            <mat-icon>search</mat-icon>
+            Filtrar
+          </button>
+          <button mat-raised-button color="warn" type="button" (click)="clearFilters()"
+            [disabled]="filterForm.pristine">
+            <mat-icon>clear</mat-icon>
+            Limpar
+          </button>
+        </div>
+      </form>
+
+      <div class="mat-elevation-z2 table-container">
+        <table mat-table [dataSource]="dataSource" aria-label="Lista de clientes" class="full-width-table">
+
+          <ng-container matColumnDef="inscricao">
+            <th mat-header-cell *matHeaderCellDef scope="col">Inscrição</th>
+            <td mat-cell *matCellDef="let cliente">{{ cliente.inscricao }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="nome">
+            <th mat-header-cell *matHeaderCellDef scope="col">Nome</th>
+            <td mat-cell *matCellDef="let cliente">{{ cliente.nome }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="apelido">
+            <th mat-header-cell *matHeaderCellDef scope="col">Apelido</th>
+            <td mat-cell *matCellDef="let cliente">{{ cliente.apelido || '-' }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef scope="col">Status</th>
+            <td mat-cell *matCellDef="let cliente">
+              <span [class]="'status-' + cliente.status.toLowerCase()" role="status">
+                {{ cliente.status }}
+              </span>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="acoes">
+            <th mat-header-cell *matHeaderCellDef scope="col">Ações</th>
+            <td mat-cell *matCellDef="let cliente">
+              <div class="action-buttons">
+                <button mat-icon-button color="primary" (click)="editCliente(cliente)" aria-label="Editar cliente"
+                  matTooltip="Editar cliente">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button color="warn" (click)="deleteCliente(cliente.id)" aria-label="Excluir cliente"
+                  matTooltip="Excluir cliente">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;" [attr.aria-label]="'Cliente ' + row.nome"></tr>
+
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell no-data-cell" [attr.colspan]="displayedColumns.length">
+              Nenhum cliente encontrado
+            </td>
+          </tr>
+        </table>
+
+        <div *ngIf="isLoading" class="loading-spinner">
+          <mat-spinner diameter="40"></mat-spinner>
+        </div>
+
+        <mat-paginator 
+        [length]="totalClientes"
+        [pageSizeOptions]="[5, 10, 20]" [pageSize]="10" showFirstLastButtons
+          aria-label="Selecione a página" (page)="onPageChange($event)">
+        </mat-paginator>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
