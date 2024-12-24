@@ -1,0 +1,71 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>{{ clienteId ? 'Editar' : 'Novo' }} Cliente</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div class="form-container">
+      <div class="photo-container">
+        <div class="photo-preview" [class.has-image]="imagePreview">
+          <img *ngIf="imagePreview" [src]="imagePreview" alt="Foto do cliente">
+          <mat-icon *ngIf="!imagePreview">account_circle</mat-icon>
+        </div>
+     
+      </div>
+
+      <form [formGroup]="clienteForm" (ngSubmit)="onSubmit()" class="main-form">
+        <mat-form-field appearance="outline">
+          <mat-label>Inscrição</mat-label>
+          <input matInput formControlName="inscricao" required>
+          <mat-error *ngIf="clienteForm.get('inscricao')?.hasError('required')">
+            Inscrição é obrigatória
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Nome</mat-label>
+          <input matInput formControlName="nome" required>
+          <mat-error *ngIf="clienteForm.get('nome')?.hasError('required')">
+            Nome é obrigatório
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Apelido</mat-label>
+          <input matInput formControlName="apelido">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Status</mat-label>
+          <mat-select formControlName="status" required>
+            <mat-option *ngFor="let status of statusOptions" [value]="status">
+              {{status}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="clienteForm.get('status')?.hasError('required')">
+            Status é obrigatório
+          </mat-error>
+        </mat-form-field>
+
+
+        <app-email-list *ngIf="clienteId" [clienteId]="clienteId"></app-email-list>
+
+        <div class="button-container">
+          <button mat-raised-button color="primary" type="submit" [disabled]="!clienteForm.valid || isLoading">
+            <mat-icon>save</mat-icon>
+            Salvar
+          </button>
+          <button mat-button (click)="router.navigate(['/clientes'])">
+            <mat-icon>cancel</mat-icon>
+            Cancelar
+          </button>
+        </div>
+      </form>
+
+    </div>
+
+    <div *ngIf="isLoading" class="loading-overlay">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+  </mat-card-content>
+</mat-card>
