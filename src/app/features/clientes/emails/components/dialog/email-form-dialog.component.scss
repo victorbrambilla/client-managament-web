@@ -1,0 +1,30 @@
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-width: 300px;
+    padding: 8px;
+  }
+  
+  mat-form-field {
+    width: 100%;
+  }
+  
+  mat-dialog-actions {
+    padding: 16px 24px;
+    margin-bottom: 0;
+  }
+  
+  :host ::ng-deep {
+    .mat-dialog-title {
+      margin: 0 0 16px;
+      color: rgba(0, 0, 0, 0.87);
+    }
+  
+    .mat-dialog-content {
+      margin: 0;
+      padding: 0 24px;
+      max-height: 65vh;
+      overflow-y: auto;
+    }
+  }
