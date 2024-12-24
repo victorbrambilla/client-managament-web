@@ -1,0 +1,75 @@
+<h2 mat-dialog-title>Gerenciar Categorias</h2>
+
+<mat-dialog-content>
+  <div class="categoria-dialog-content">
+    <form [formGroup]="categoriaForm" (ngSubmit)="onSubmit()" class="categoria-form">
+      <mat-form-field appearance="outline">
+        <mat-label>Nome da Categoria</mat-label>
+        <input matInput 
+               formControlName="nome" 
+               placeholder="Digite o nome da categoria">
+        <mat-error *ngIf="categoriaForm.get('nome')?.hasError('required')">
+          Nome é obrigatório
+        </mat-error>
+        <mat-error *ngIf="categoriaForm.get('nome')?.hasError('minlength')">
+          Nome deve ter no mínimo 3 caracteres
+        </mat-error>
+      </mat-form-field>
+
+      <div class="form-actions">
+        <button mat-raised-button 
+                color="primary" 
+                type="submit"
+                [disabled]="!categoriaForm.valid || isLoading">
+          {{ editingId ? 'Atualizar' : 'Adicionar' }}
+        </button>
+        <button mat-button 
+                type="button" 
+                *ngIf="editingId"
+                (click)="categoriaForm.reset(); editingId = null">
+          Cancelar Edição
+        </button>
+      </div>
+    </form>
+
+    <mat-divider></mat-divider>
+
+    <div class="categorias-list">
+      <h3>Categorias Existentes</h3>
+      
+      <mat-list role="list">
+        <mat-list-item *ngFor="let categoria of categorias" role="listitem">
+          <span matListItemTitle>{{ categoria.nome }}</span>
+          <div matListItemMeta>
+            <button mat-icon-button 
+                    color="primary"
+                    (click)="editCategoria(categoria)"
+                    [disabled]="isLoading"
+                    matTooltip="Editar categoria">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button 
+                    color="warn"
+                    (click)="deleteCategoria(categoria.id!)"
+                    [disabled]="isLoading"
+                    matTooltip="Excluir categoria">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </mat-list-item>
+      </mat-list>
+
+      <div *ngIf="categorias.length === 0" class="no-data">
+        Nenhuma categoria cadastrada
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="isLoading" class="loading-overlay">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Fechar</button>
+</mat-dialog-actions>
