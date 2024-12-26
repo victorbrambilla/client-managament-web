@@ -1,9 +1,17 @@
 <mat-card>
-  <mat-card-header>
-    <mat-card-title>
-      <h1 class="mat-headline-5">Lista de Clientes</h1>
-    </mat-card-title>
-  </mat-card-header>
+  <div class="header">
+
+    <mat-card-header class="header-container">
+      <mat-card-title>
+        <h1 class="mat-headline-5">Lista de Clientes</h1>
+      </mat-card-title>
+      <button mat-raised-button color="primary" (click)="navigateToCreateCliente()" class="create-button">
+        <mat-icon>add</mat-icon>
+        Criar Cliente
+      </button>
+    </mat-card-header>
+  </div>
+
 
   <mat-card-content>
     <div class="cliente-list-container">

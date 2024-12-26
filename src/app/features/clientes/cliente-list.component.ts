@@ -131,6 +131,10 @@ export class ClienteListComponent implements OnInit {
     return `status-chip status-${statusLower}`;
   }
 
+  navigateToCreateCliente() {
+    this.router.navigate(['/clientes/novo']);
+  }
+
   private showErrorMessage(message: string): void {
     this.snackBar.open(message, 'Fechar', {
       duration: 5000,

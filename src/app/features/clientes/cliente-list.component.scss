@@ -1,8 +1,17 @@
+
+.header-container{
+  display: flex;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+}
 .cliente-list-container {
     max-width: 1200px;
     margin: 20px auto;
     padding: 24px;
   }
+
+  
   
   /* Estilo do Card */
   :host ::ng-deep .mat-card {
@@ -70,6 +79,13 @@
   .mat-raised-button.mat-warn:hover {
     background-color: #c0392b;
     box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+  }
+  
+  .create-button {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
   
   /* Estilo da Tabela */
