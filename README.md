@@ -1,59 +1,61 @@
-# ClientManagement
+# Client Management
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.6.
+Este é um projeto de gerenciamento de clientes desenvolvido com Angular e AWS Amplify para autenticação.
 
-## Development server
+## Requisitos
 
-To start a local development server, run:
+- Node.js
+- Angular CLI
+- AWS Amplify
 
-```bash
-ng serve
+## Instalação
+
+1. Clone o repositório:
+    ```sh
+    git clone https://github.com/seu-usuario/client-management.git
+    cd client-management
+    ```
+
+2. Instale as dependências:
+    ```sh
+    npm install
+    ```
+
+3. Configure o AWS Amplify com suas credenciais:
+    ```sh
+    amplify configure
+    ```
+
+## Executando o Projeto
+
+Para iniciar o servidor de desenvolvimento, execute:
+```sh
+npm start
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+O aplicativo estará disponível em `http://localhost:4200`.
 
-## Code scaffolding
+## Estrutura do Projeto
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- `src/app/features/auth`: Contém os componentes e serviços de autenticação.
+- `src/app/features/auth/login`: Componente de login.
+- `src/app/features/auth/auth.service.ts`: Serviço de autenticação.
+- `src/app/features/auth/auth.interceptor.ts`: Interceptor para adicionar o token JWT às requisições.
+- `src/app/features/auth/auth.guard.ts`: Guarda de rota para proteger rotas autenticadas.
 
-```bash
-ng generate component component-name
-```
+## Scripts Disponíveis
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+- `npm start`: Inicia o servidor de desenvolvimento.
+- `npm run build`: Compila o aplicativo para produção.
+- `npm test`: Executa os testes unitários.
 
-```bash
-ng generate --help
-```
+## Dependências
 
-## Building
+- Angular
+- AWS Amplify
+- RxJS
 
-To build the project run:
+## Contribuição
 
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Contribuições são bem-vindas! Sinta-se à vontade para abrir uma issue ou enviar um pull request.
+ 
