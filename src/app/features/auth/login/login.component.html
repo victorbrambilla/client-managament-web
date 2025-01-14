@@ -1,0 +1,92 @@
+<div class="login-container">
+    <mat-card class="login-card">
+      <mat-card-header class="login-header">
+        <mat-card-title>Login</mat-card-title>
+        <mat-card-subtitle>Faça login na sua conta</mat-card-subtitle>
+      </mat-card-header>
+  
+      <mat-card-content>
+        <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)" class="login-form">
+          <!-- Mensagem de erro -->
+          <mat-error *ngIf="errorMessage" class="error-message">
+            {{ errorMessage }}
+          </mat-error>
+  
+          <!-- Email -->
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput
+                   type="string"
+                   name="email"
+                   [(ngModel)]="email"
+                   required
+                    
+                   placeholder="seu@email.com"
+                   #emailInput="ngModel">
+            <mat-icon matSuffix>email</mat-icon>
+            <mat-error *ngIf="emailInput.invalid && emailInput.touched">
+              <span *ngIf="emailInput.errors?.['required']">Email é obrigatório</span>
+              <span *ngIf="emailInput.errors?.['email']">Email inválido</span>
+            </mat-error>
+          </mat-form-field>
+  
+          <!-- Senha -->
+          <mat-form-field appearance="outline">
+            <mat-label>Senha</mat-label>
+            <input matInput
+                   [type]="hidePassword ? 'password' : 'text'"
+                   name="password"
+                   [(ngModel)]="password"
+                   required
+                   placeholder="••••••••"
+                   #passwordInput="ngModel">
+            <button mat-icon-button
+                    matSuffix
+                    type="button"
+                    (click)="hidePassword = !hidePassword"
+                    [attr.aria-label]="'Mostrar senha'"
+                    [attr.aria-pressed]="!hidePassword">
+              <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+            <mat-error *ngIf="passwordInput.invalid && passwordInput.touched">
+              Senha é obrigatória
+            </mat-error>
+          </mat-form-field>
+  
+          <!-- Lembrar-me e Esqueceu a senha -->
+          <div class="form-actions">
+            <mat-checkbox name="rememberMe" [(ngModel)]="rememberMe">
+              Lembrar-me
+            </mat-checkbox>
+            <a mat-button
+               color="primary"
+               routerLink="/forgot-password">
+              Esqueceu sua senha?
+            </a>
+          </div>
+  
+          <!-- Botão de Login -->
+          <button mat-raised-button
+                  color="primary"
+                  type="submit"
+                  class="submit-button"
+                  [disabled]="loginForm.invalid || isLoading">
+            <span *ngIf="!isLoading">Entrar</span>
+            <mat-spinner *ngIf="isLoading"
+                        diameter="20"
+                        class="spinner"></mat-spinner>
+          </button>
+  
+          <!-- Link para Registro -->
+          <div class="register-link">
+            <span>Não tem uma conta?</span>
+            <a mat-button
+               color="primary"
+               routerLink="/signup">
+              Registre-se
+            </a>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>

@@ -1,0 +1,135 @@
+<div class="signup-container">
+    <mat-card class="signup-card" *ngIf="!isConfirm">
+        <mat-card-header class="signup-header">
+            <mat-card-title>Criar Conta</mat-card-title>
+            <mat-card-subtitle>Preencha os dados para se cadastrar</mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+            <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="signup-form">
+                <!-- Username -->
+                <mat-form-field appearance="outline">
+                    <mat-label>Nome de usuário</mat-label>
+                    <input matInput formControlName="username" placeholder="Ex: john_doe">
+                    <mat-icon matSuffix>person</mat-icon>
+                    <mat-error *ngIf="signupForm.get('username')?.errors?.['required']">
+                        Nome de usuário é obrigatório
+                    </mat-error>
+                    <mat-error *ngIf="signupForm.get('username')?.errors?.['minlength']">
+                        Nome de usuário deve ter no mínimo 3 caracteres
+                    </mat-error>
+                    <mat-error *ngIf="signupForm.get('username')?.errors?.['pattern']">
+                        Nome de usuário deve conter apenas letras, números, _ ou -
+                    </mat-error>
+                </mat-form-field>
+
+                <!-- Email -->
+                <mat-form-field appearance="outline">
+                    <mat-label>Email</mat-label>
+                    <input matInput type="email" formControlName="email" placeholder="Ex: john@example.com">
+                    <mat-icon matSuffix>email</mat-icon>
+                    <mat-error *ngIf="signupForm.get('email')?.errors?.['required']">
+                        Email é obrigatório
+                    </mat-error>
+                    <mat-error *ngIf="signupForm.get('email')?.errors?.['email']">
+                        Email inválido
+                    </mat-error>
+                </mat-form-field>
+
+                <!-- Nome Completo -->
+                <mat-form-field appearance="outline">
+                    <mat-label>Nome Completo</mat-label>
+                    <input matInput formControlName="name" placeholder="Ex: John Doe">
+                    <mat-icon matSuffix>badge</mat-icon>
+                    <mat-error *ngIf="signupForm.get('name')?.errors?.['required']">
+                        Nome é obrigatório
+                    </mat-error>
+                    <mat-error *ngIf="signupForm.get('name')?.errors?.['minlength']">
+                        Nome deve ter no mínimo 3 caracteres
+                    </mat-error>
+                </mat-form-field>
+
+                <!-- Senha -->
+                <mat-form-field appearance="outline">
+                    <mat-label>Senha</mat-label>
+                    <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password"
+                        placeholder="Digite sua senha">
+                    <button mat-icon-button matSuffix type="button" (click)="hidePassword = !hidePassword">
+                        <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                    <mat-error>{{getPasswordErrorMessage()}}</mat-error>
+                    <mat-hint>
+                        A senha deve conter pelo menos 8 caracteres, incluindo maiúsculas, minúsculas, números e
+                        caracteres especiais
+                    </mat-hint>
+                </mat-form-field>
+
+                <!-- Confirmar Senha -->
+                <mat-form-field appearance="outline">
+                    <mat-label>Confirmar Senha</mat-label>
+                    <input matInput [type]="hideConfirmPassword ? 'password' : 'text'" formControlName="confirmPassword"
+                        placeholder="Confirme sua senha">
+                    <button mat-icon-button matSuffix type="button"
+                        (click)="hideConfirmPassword = !hideConfirmPassword">
+                        <mat-icon>{{hideConfirmPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                    <mat-error *ngIf="signupForm.get('confirmPassword')?.errors?.['required']">
+                        Confirmação de senha é obrigatória
+                    </mat-error>
+                    <mat-error *ngIf="signupForm.hasError('mismatch')">
+                        As senhas não coincidem
+                    </mat-error>
+                </mat-form-field>
+
+                <!-- Botões -->
+                <div class="button-container">
+                    <button mat-raised-button color="primary" type="submit" class="submit-button"
+                        [disabled]="signupForm.invalid || isLoading">
+                        <span *ngIf="!isLoading">Criar Conta</span>
+                        <mat-spinner *ngIf="isLoading" diameter="20" class="spinner"></mat-spinner>
+                    </button>
+
+                    <div class="login-link">
+                        <span>Já tem uma conta?</span>
+                        <a mat-button color="primary" routerLink="/login">
+                            Fazer Login
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card class="signup-card" *ngIf="isConfirm">
+        <mat-card-header class="signup-header">
+            <mat-card-title>Confirmar cadastro</mat-card-title>
+            <mat-card-subtitle>Digite o código de confirmação enviado para o seu email</mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+            <form [formGroup]="confirmForm" (ngSubmit)="onConfirm()" class="signup-form">
+                <!-- Código de Confirmação -->
+                <mat-form-field appearance="outline">
+                    <mat-label>Código de Confirmação</mat-label>
+                    <input matInput formControlName="confirmationCode" placeholder="Ex: 123456">
+                    <mat-icon matSuffix>lock</mat-icon>
+                    <mat-error *ngIf="confirmForm.get('confirmationCode')?.errors?.['required']">
+                        Código de confirmação é obrigatório
+                    </mat-error>
+                </mat-form-field>
+
+                <!-- Botões -->
+                <div class="button-container">
+                    <button mat-raised-button color="primary" type="submit" class="submit-button"
+                        [disabled]="confirmForm.invalid || isLoading">
+                        <span *ngIf="!isLoading">Confirmar</span>
+                        <mat-spinner *ngIf="isLoading" diameter="20" class="spinner"></mat-spinner>
+                    </button>
+
+                </div>
+            </form>
+        </mat-card-content>
+
+
+    </mat-card>
+</div>

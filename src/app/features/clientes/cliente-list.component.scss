@@ -1,4 +1,6 @@
-
+.cliente-list-card{
+  height: 100vh !important;
+}
 .header-container{
   display: flex;
     justify-content: space-between;
@@ -163,6 +165,11 @@
   
     .button-container button {
       width: 100%;
+    }
+
+    .create-button {
+      width: 100%;
+      justify-content: center;
     }
   
     /* Tabela responsiva */
